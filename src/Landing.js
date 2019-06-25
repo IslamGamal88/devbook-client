@@ -2,7 +2,10 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import background from "./assets/imgs/showcase.jpg";
-import { Button } from "@material-ui/core";
+import { Button, Link } from "@material-ui/core";
+
+import { Link as RouterLink } from "react-router-dom";
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
@@ -34,6 +37,12 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     margin: theme.spacing(1)
+  },
+  link: {
+    "&:hover": {
+      color: "inherit",
+      textDecoration: "none"
+    }
   }
 }));
 
@@ -51,10 +60,14 @@ const Landing = () => {
           </Typography>
           <div>
             <Button className={classes.button} variant="contained" color="primary">
-              Sign Up
+              <Link to="/register" component={RouterLink} color="inherit" className={classes.link}>
+                Signup
+              </Link>
             </Button>
             <Button className={classes.button} variant="contained" color="default">
-              Login
+              <Link to="/login" component={RouterLink} color="inherit" className={classes.link}>
+                login
+              </Link>
             </Button>
           </div>
         </div>
