@@ -6,12 +6,33 @@ import { createStore, applyMiddleware } from "redux";
 // import reducers from "./store/reducers";
 import thunk from "redux-thunk";
 import * as serviceWorker from "./serviceWorker";
+import { ThemeProvider } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core";
+import { blue, purple, blueGrey } from "@material-ui/core/colors";
 
 const store = createStore(applyMiddleware(thunk));
 
+const textPrimary = blueGrey[500];
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: purple
+  },
+  typography: {
+    h2: {
+      color: textPrimary
+    },
+    body1: {
+      color: textPrimary
+    }
+  }
+});
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
