@@ -1,16 +1,20 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import App from "./App";
+
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-// import reducers from "./store/reducers";
+import reducers from "./store/reducers";
 import thunk from "redux-thunk";
-import * as serviceWorker from "./serviceWorker";
+import { composeWithDevTools } from "redux-devtools-extension";
+
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core";
 import { blue, purple, blueGrey } from "@material-ui/core/colors";
 
-const store = createStore(applyMiddleware(thunk));
+import * as serviceWorker from "./serviceWorker";
+
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 const textPrimary = blueGrey[500];
 const theme = createMuiTheme({
@@ -28,7 +32,7 @@ const theme = createMuiTheme({
   }
 });
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <App />

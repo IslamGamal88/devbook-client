@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextField, makeStyles, Container, Typography, Button, Link, Box } from "@material-ui/core";
 import clsx from "clsx";
 import { AccountCircleRounded } from "@material-ui/icons";
 import { Link as RouterLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { reduxForm, Field, FormSection } from "redux-form";
+import { required, email, validateForm, length, format, confirmation } from "redux-form-validators";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,7 +29,8 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   box: {
     display: "flex",
@@ -34,24 +38,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Register = () => {
-  const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confPassword: ""
-  });
+const validate = validateForm({
+  name: [required({ message: "This field is required" }), length({ max: 30, message: "Maximum characters exceeded" })],
+  email: [required({ message: "This field is required" }), email({ message: "Invalid email" })],
+  password: [
+    required({ message: "This field is required" }),
+    length({ min: 8, message: "Password must be at least 8 characters" }),
+    format({ with: /^[a-z]+$/i, message: "Password can only be letters" })
+  ],
+  confPassword: [confirmation({ field: "section.password", fieldLabel: "Password" })]
+});
 
-  const handleChange = name => ({ target: { value } }) => {
-    setValues({ ...values, [name]: value });
-  };
+// input components
+const renderInputs = ({ input, meta: { touched, error }, name, label, ...custom }) => {
+  // const label = name => name.charAt(0).toUpperCase() + name.slice(1);
+  return (
+    <TextField
+      error={touched && error}
+      helperText={touched && error}
+      variant="outlined"
+      label={label}
+      value={name}
+      fullWidth
+      margin="dense"
+      {...input}
+      {...custom}
+    />
+  );
+};
 
-  const handleSubmit = values => e => {
-    e.preventDefault();
+function Register(props) {
+  console.log("props", props);
+  const { handleSubmit, reset } = props;
+
+  const onSubmit = values => {
+    console.log("formValues", values);
+    console.log("Yay we did it");
   };
 
   const classes = useStyles();
-  const { name, email, password, confPassword } = values;
   return (
     <Container className={classes.container} maxWidth="sm">
       <Typography variant="h2" gutterBottom>
@@ -61,48 +86,29 @@ const Register = () => {
         <AccountCircleRounded color="primary" className={classes.icon} />
         <Typography variant="body1">Create Your Account</Typography>
       </Box>
-      <form noValidate autoComplete="off" handleSubmit={handleSubmit}>
-        <TextField
-          variant="outlined"
-          // id="standard-name"
-          label="Name"
-          value={name}
-          onChange={handleChange("name")}
-          className={clsx(classes.dense)}
-          fullWidth
-          margin="dense"
-        />
-        <TextField
-          variant="outlined"
-          // id="standard-name"
-          label="Email"
-          value={email}
-          onChange={handleChange("email")}
-          className={clsx(classes.dense)}
-          fullWidth
-          margin="dense"
-        />
-        <TextField
-          variant="outlined"
-          // id="standard-name"
-          label="Password"
-          value={password}
-          onChange={handleChange("password")}
-          className={clsx(classes.dense)}
-          fullWidth
-          margin="dense"
-        />
-        <TextField
-          variant="outlined"
-          // id="standard-name"
-          label="Confirm Password"
-          value={confPassword}
-          onChange={handleChange("confPassword")}
-          className={clsx(classes.dense)}
-          fullWidth
-          margin="dense"
-        />
-        <Button className={classes.button} variant="contained" color="primary">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Field autoFocus component={renderInputs} name="name" label="Name" className={clsx(classes.dense)} />
+        <Field component={renderInputs} name="email" label="Email" className={clsx(classes.dense)} />
+        <FormSection name="section">
+          <Field
+            component={renderInputs}
+            type="password"
+            name="password"
+            label="Password"
+            className={clsx(classes.dense)}
+          />
+          <Field
+            component={renderInputs}
+            type="password"
+            name="confPassword"
+            label="Confirm Password"
+            className={clsx(classes.dense)}
+          />
+        </FormSection>
+        <Button type="submit" className={classes.button} variant="contained" color="primary">
+          Submit
+        </Button>
+        <Button onClick={reset} className={classes.button} variant="contained" color="default">
           Submit
         </Button>
         <Typography variant="body1">
@@ -114,6 +120,6 @@ const Register = () => {
       </form>
     </Container>
   );
-};
+}
 
-export default Register;
+export default reduxForm({ form: "register", validate })(Register);
