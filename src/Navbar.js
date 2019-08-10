@@ -11,7 +11,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { Link, Typography } from "@material-ui/core";
 
 function ListItemLink(props) {
-  return <ListItem button component="RouterLink" {...props} />;
+  return <ListItem button component={RouterLink} {...props} />;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -41,29 +41,44 @@ const Navbar = props => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="primary">
+      <AppBar position='static' color='primary'>
         <Toolbar>
           <CodeIcon className={classes.icon} />
-          <Typography variant="h6" className={classes.title}>
-            <Link component={RouterLink} to="/" color="inherit" underline="none" className={classes.link}>
+          <Typography variant='h6' className={classes.title}>
+            <Link component={RouterLink} to='/' color='inherit' underline='none' className={classes.link}>
               Devbook
             </Link>
           </Typography>
-          <List component="nav" dense="true">
-            <ListItem component="div">
+          <List component='nav' dense={true}>
+            <ListItem component='div'>
               <ListItemLink>
-                <Link component={RouterLink} to="/developers" color="inherit" underline="none" className={classes.link}>
-                  <ListItemText primary="Developers" />
+                <Link
+                  component={RouterLink}
+                  to='/developers'
+                  color='inherit'
+                  underline='none'
+                  className={classes.link}>
+                  <ListItemText primary='Developers' />
                 </Link>
               </ListItemLink>
               <ListItemLink>
-                <Link component={RouterLink} to="/register" color="inherit" underline="none" className={classes.link}>
-                  <ListItemText primary="Register" />
+                <Link
+                  component={RouterLink}
+                  to='/register'
+                  color='inherit'
+                  underline='none'
+                  className={classes.link}>
+                  <ListItemText primary='Register' />
                 </Link>
               </ListItemLink>
               <ListItemLink>
-                <Link component={RouterLink} to="/login" color="inherit" underline="none" className={classes.link}>
-                  <ListItemText primary="Login" />
+                <Link
+                  component={RouterLink}
+                  to='/login'
+                  color='inherit'
+                  underline='none'
+                  className={classes.link}>
+                  <ListItemText primary='Login' />
                 </Link>
               </ListItemLink>
             </ListItem>

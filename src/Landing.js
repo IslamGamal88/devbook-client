@@ -16,14 +16,12 @@ const useStyles = makeStyles(theme => ({
     backgroundPosition: "center",
     position: "relative"
   },
-
   overlay: {
     position: "absolute",
     width: "100%",
     height: "100%",
     backgroundColor: "rgba(0, 0, 0, 0.7)"
   },
-
   content: {
     alignItems: "center",
     justifyContent: "center",
@@ -52,20 +50,20 @@ const Landing = () => {
     <section className={classes.root}>
       <div className={classes.overlay}>
         <div className={classes.content}>
-          <Typography color="inherit" variant="h1" gutterBottom>
+          <Typography color='inherit' variant='h1' gutterBottom>
             Devbook
           </Typography>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography variant='subtitle1' gutterBottom>
             Create a developer profile, share posts and get help from other developers
           </Typography>
           <div>
-            <Button className={classes.button} variant="contained" color="primary">
-              <Link to="/register" component={RouterLink} color="inherit" className={classes.link}>
+            <Button className={classes.button} variant='contained' color='primary'>
+              <Link to='/register' component={RouterLink} color='inherit' className={classes.link}>
                 Signup
               </Link>
             </Button>
-            <Button className={classes.button} variant="contained" color="default">
-              <Link to="/login" component={RouterLink} color="inherit" className={classes.link}>
+            <Button className={classes.button} variant='contained' color='default'>
+              <Link to='/login' component={RouterLink} color='inherit' className={classes.link}>
                 login
               </Link>
             </Button>
