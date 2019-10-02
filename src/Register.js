@@ -88,10 +88,10 @@ function Register(props) {
     dispatch(signUpUser(values));
   };
 
-  const onReset = () => {
-    props.destroy();
-    props.initialize("");
-  };
+  // const onReset = () => {
+  //   props.destroy();
+  //   props.initialize("");
+  // };
 
   const classes = useStyles();
   return (
@@ -131,9 +131,9 @@ function Register(props) {
         <Button type='submit' className={classes.button} variant='contained' color='primary'>
           Submit
         </Button>
-        <Button onClick={onReset} className={classes.button} variant='contained' color='default'>
+        {/* <Button onClick={onReset} className={classes.button} variant='contained' color='default'>
           Reset
-        </Button>
+        </Button> */}
         <Typography variant='body1'>
           Already have an account?{" "}
           <Link color='primary' component={RouterLink} to='/login'>
